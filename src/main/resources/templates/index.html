@@ -4,14 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Main Page</title>
+    <link rel="stylesheet" th:href="@{style.css}">
 </head>
 <body>
 <h1>Welcome</h1>
-<a th:href="@{'/products'}">View all products</a>
-<a th:href="@{'/products/new'}">Add new product</a>
-<a th:href="@{'/products/form'}">Find a product</a>
-<a th:href="@{'/users'}">View all users</a>
-<a th:href="@{'/users/new'}">Add new user</a>
+<div>
+    <a th:href="@{'/products'}">View all products</a>
+    <a th:href="@{'/products/new'}">Add new product</a>
+    <a th:href="@{'/products/form'}">Find a product</a>
+    <a th:href="@{'/users'}">View all users</a>
+    <a th:href="@{'/users/new'}">Add new user</a>
+</div>
+
 
 
 </body>

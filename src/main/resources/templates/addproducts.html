@@ -9,8 +9,13 @@
 <form th:object="${product}" method="post">
     <label>Name: </label>
     <input th:field="*{name}" >
+    <br>
+    <label>Price: </label>
     <input th:field="*{price}" >
+    <br>
+    <label> Category: </label>
     <input th:field="*{category}" >
+    <br>
     <input type="submit">
 </form>
 </body>
