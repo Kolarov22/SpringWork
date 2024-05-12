@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Preliminary Reports</title>
+</head>
+<body>
+<h2>All Preliminary Reports</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Location</th>
+        <th>Priority</th>
+        <th>Details</th>
+    </tr>
+    </thead>
+    <tbody th:each="report : ${reports}">
+    <tr>
+        <td th:text="${report.id}"></td>
+        <td th:text="${report.location}"></td>
+        <td th:text="${report.priority}"></td>
+        <td><a th:href="@{'/reports/' + ${report.id}}">View Details</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

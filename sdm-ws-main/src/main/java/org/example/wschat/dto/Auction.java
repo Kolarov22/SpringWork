@@ -2,6 +2,8 @@ package org.example.wschat.dto;
 
 public class Auction {
 
+    private int id;
+
     private String name;
     private String bidder;
     private Long minPrice;
@@ -10,7 +12,8 @@ public class Auction {
     //getters and setters
 
 
-    public Auction(String name, String bidder, Long minPrice, Long expirationTime) {
+    public Auction(int id, String name, String bidder, Long minPrice, Long expirationTime) {
+        this.id = id;
         this.name = name;
         this.bidder = bidder;
         this.minPrice = minPrice;
@@ -52,7 +55,8 @@ public class Auction {
     @Override
     public String toString() {
         return "Auction{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", bidder='" + bidder + '\'' +
                 ", minPrice=" + minPrice +
                 ", expirationTime=" + expirationTime +

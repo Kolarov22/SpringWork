@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Report Details</title>
+</head>
+<body>
+<h2>Report Details</h2>
+<div>
+    <div th:text="'ID: ' + ${report.id}"></div>
+    <div th:text="'Location: ' + ${report.location}"></div>
+    <div th:text="'Priority: ' + ${report.priority}"></div>
+    <div th:text="'Emergency Call Phone Number: ' + ${report.emergencyCall.phoneNumber}"></div>
+    <div th:text="'Emergency Call Description: ' + ${report.emergencyCall.description}"></div>
+</div>
+
+<form action="#" th:action="@{/reports/emergencyReports}" method="post">
+    <input type="hidden" th:value="${report.id}" name="preliminaryReportId"/>
+    <label>Issue Date:</label>
+    <input type="datetime-local" name="issueDate">
+    <label>Status:</label>
+    <select name="status">
+        <option value="Closed">Closed</option>
+        <option value="In progress">In progress</option>
+    </select>
+    <input type="submit" value="Validate">
+</form>
+
+<a href="/reports">Back to All Reports</a>
+</body>
+</html>

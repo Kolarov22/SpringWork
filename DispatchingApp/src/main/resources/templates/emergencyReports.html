@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Emergency Reports</title>
+</head>
+<body>
+<h2>All Emergency Reports</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Issue Date</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody th:each="report : ${emergencyReports}">
+    <tr>
+        <td th:text="${report.id}"></td>
+        <td th:text="${report.issueDate}"></td>
+        <td th:text="${report.status}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

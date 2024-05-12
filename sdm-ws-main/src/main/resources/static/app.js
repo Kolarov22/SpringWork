@@ -1,11 +1,12 @@
 let username = null;
 let socket = null;
 let stompClient = null;
+let auctions = []
 
 function login() {
     const usernameInput = document.getElementById('usernameInput');
     username = usernameInput.value.trim();
-    if (username == "admin") {
+    if (username === "admin") {
         document.getElementById('loginForm').style.display = 'none';
         document.getElementById('admin-console').style.display = 'block';
         console.log("Calling connectAdmin");
@@ -40,6 +41,7 @@ function connectUser(){
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/auctions', function (auction) {
                 showAuctions(JSON.parse(auction.body));
+                console.log(JSON.parse(auction));
             });
         },
         function (error) {
@@ -59,12 +61,17 @@ function sendAuction() {
     const expTime = expirationTime.value.trim();
 
     if (name && bidder && price && expTime) {
-        const auction = {
+        let auction = {
             name: name,
             bidder: bidder,
             minPrice: price,
             expirationTime: expTime
         }
+        auctions.push(auction);
+        const auctionId = auctions.indexOf(auction);
+        auctions.pop();
+        auction = {id: auctionId, ...auction};
+        auctions.push(auction);
         stompClient.send("/app/chat.sendAuction", {}, JSON.stringify(auction));
         auctionName.value='';
         bidderName.value='';
@@ -75,23 +82,43 @@ function sendAuction() {
 }
 
 function showAuctions(message) {
-    console.log('Received: ' + message);
+    console.log('Received: ' + JSON.stringify(message));
     const auctionsList = document.getElementById('auctionList');
     const entry = document.createElement('li');
     const update = document.createElement('button')
+    update.addEventListener('click', function(e){
+        e.preventDefault();
+        sendBid();
+    })
     const newPrice = document.createElement("input")
     update.textContent="Bid"
     update.id = "updateButton"
     newPrice.id = "updatedPrice"
+    newPrice.placeholder="Bid an amount"
     entry.textContent = message.name + " " + message.bidder + " " + message.minPrice + " "+ message.expirationTime;
+    entry.id = message.id
     entry.appendChild(update);
     entry.appendChild(newPrice);
     auctionsList.appendChild(entry);
     auctionsList.scrollTop = auctionsList.scrollHeight;
+    console.log(auctions);
 }
 
 function sendBid(){
-    const newPrice = document.getElementById("updatedPrice");
+    const newPriceInput = document.getElementById("updatedPrice");
+    const newPrice = newPriceInput.value.trim();
+    const entryId = newPriceInput.parentElement.id;
+
+    if (newPrice) {
+        const bid = {
+            auctionId: entryId,
+            bidder: username,
+            amount: newPrice
+        }
+        console.log(bid);
+        stompClient.send("/app/chat.placeBid", {}, JSON.stringify(bid));
+        newPriceInput.value = '';
+    }
 
 }
 
@@ -105,7 +132,3 @@ document.getElementById('auctionForm').addEventListener('submit', function (e) {
     sendAuction();
 });
 
-document.getElementById('updateButton').addEventListener('click', function(e){
-    e.preventDefault();
-    sendBid();
-})
