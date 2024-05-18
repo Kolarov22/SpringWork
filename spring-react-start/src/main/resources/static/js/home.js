@@ -3,6 +3,7 @@ const addProductButton = document.getElementById("addProductButton");
 
 refreshProducts();
 
+
 function refreshProducts(){
     fetch('/api/v1/products/')
         .then(response => response.json())
@@ -41,6 +42,8 @@ addProductButton.onclick = () => {
                 console.error('Error adding product:', response.status);
             }
         });
+    refreshProducts();
+
 };
 
 const deleteProductButton = document.getElementById("deleteProductButton");
@@ -57,6 +60,7 @@ deleteProductButton.onclick = () => {
                 console.error('Error deleting product:', response.status);
             }
         });
+    refreshProducts();
 };
 
 const modifyProductButton = document.getElementById("modifyProductButton");
@@ -83,5 +87,6 @@ modifyProductButton.onclick = () => {
                 console.error('Error modifying product:', response.status);
             }
         });
+    refreshProducts();
 };
 

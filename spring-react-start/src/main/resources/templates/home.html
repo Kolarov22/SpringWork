@@ -14,21 +14,38 @@
     <span class="header-text">COMPANY NAME</span>
 </div>
 <h2>Add product:</h2>
-<input type="text" id="productName" placeholder="Product Name">
-<input type="number" id="productPrice" placeholder="Product Price">
-<button id="addProductButton">Add Product</button>
+<form>
+    Name<input id="productName" name="productName" >
+    Price<input id="productPrice" name="productPrice" >
+    <input id="addProductButton" type="submit">
+</form>
 
 <h2>Delete product:</h2>
-<input type="number" id="deleteProductId" placeholder="Product ID">
-<button id="deleteProductButton">Delete Product</button>
+<form>
+    Id <select class="form-control" id="deleteProductId">
+    <option th:each="id : ${list_ids}" th:value="${id}" th:text="${'#' + id}"></option>
+</select>
+    <input id="deleteProductButton" type="submit">
+</form>
 
 <h2>Modify product:</h2>
-<input type="number" id="modifyProductId" placeholder="Product ID">
-<input type="text" id="modifyProductName" placeholder="New Product Name">
-<input type="number" id="modifyProductPrice" placeholder="New Product Price">
-<button id="modifyProductButton">Modify Product</button>
+<form>
+    Id <select class="form-control" id="modifyProductId">
+    <option th:each="id : ${list_ids}" th:value="${id}" th:text="${'#' + id}"></option>
+</select>
+    <!--    Id<input id="patchProductId" name="deleteId" >-->
+    Name<input id="modifyProductName" name="addProductName" >
+    Price<input id="modifyProductPrice" name="addProductPrice" >
+    <input id="modifyProductButton" type="submit">
+
+    <div id="details"> details here </div>
+
+</form>
 
 <h2>Product list:</h2>
+
+
+
 <div id="products"></div>
 </body>
 </html>
