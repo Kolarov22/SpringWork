@@ -27,12 +27,22 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((authorizeRequests) ->
                         authorizeRequests
-                                .requestMatchers(HttpMethod.POST,"/products/**")
+                                .requestMatchers(HttpMethod.POST, "/products/**")
                                 .hasAnyRole("ADMIN")
-                                .requestMatchers(HttpMethod.GET,"/products/**","/cart/**")
+                                .requestMatchers("/admin/**")
+                                .hasAnyRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/products/**")
                                 .hasAnyRole("USER","ADMIN")
-                                .requestMatchers("/","/css/**","/images/**").permitAll())
-                .formLogin(withDefaults()).httpBasic().and().csrf().disable();
+                                .requestMatchers("/cart/**")
+                                .hasAnyRole("USER")
+                                .requestMatchers("/","/css/**","/images/**", "/login/**").permitAll())
+                        .formLogin(formLogin -> formLogin.loginPage("/login.html")
+                                .loginProcessingUrl("/login")
+                                .defaultSuccessUrl("/", true)
+                                .failureUrl("/login/error"))
+
+                        .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer.logoutSuccessUrl("/"))
+                        .httpBasic().and().csrf().disable();
         return http.build();
     }
     @Bean
@@ -51,4 +61,7 @@ public class SecurityConfig {
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
-    }}
+    }
+
+
+}

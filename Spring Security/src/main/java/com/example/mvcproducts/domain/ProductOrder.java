@@ -47,8 +47,17 @@ public class ProductOrder {
   public ProductOrder() {
   }
 
-  public ProductOrder(Long id, Set<OrderLineItem> orderLineItems) {
-    this.id = id;
+  public ProductOrder(Set<OrderLineItem> orderLineItems) {
     this.orderLineItems = orderLineItems;
   }
+
+  @Override
+  public String toString() {
+    return "ProductOrder{" +
+            "id=" + id +
+            ", orderLineItems=" + orderLineItems +
+            '}';
+  }
 }
+
+

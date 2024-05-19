@@ -10,9 +10,12 @@
 <body>
 <div th:replace="fragments/general :: top"/>
 <h1>Your Cart</h1>
-<div th:each="product : ${cart.products}">
-    <span th:text="${product.name}">name</span>
-    <span th:text="${product.price}">price</span>
-</div>
+<form th:object="${cart}" th:action="@{cart/order}" method="post">
+    <div th:each="product : ${cart.products}">
+        <span th:text="${product.name}">name</span>
+        <span th:text="${product.price}">price</span>
+    </div>
+    <input type="submit" value="Send order">
+</form>
 </body>
 </html>

@@ -60,4 +60,13 @@ public class OrderLineItem {
   public void setQty(int qty) {
     this.qty = qty;
   }
+
+  @Override
+  public String toString() {
+    return "OrderLineItem{" +
+            "id=" + id +
+            ", product=" + product +
+            ", qty=" + qty +
+            '}';
+  }
 }

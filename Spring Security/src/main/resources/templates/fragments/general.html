@@ -1,13 +1,18 @@
-<div th:fragment="top">
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="top" xmlns:sec="http://www.w3.org/1999/xhtml">
 <div class="header">
   <img  th:src="@{/images/companyLogo.jpg}" width="100px"  />
   <span class="header-text">COMPANY NAME</span>
 </div>
 <nav>
   <a href="/">Home</a>
-  <a href="/products">Products</a>
-  <a href="/admin">Admin</a>
-  <a href="/logout">Logout</a>
-  <a href="/cart">See cart</a>
+  <a sec:authorize="!isAuthenticated()" href="/register">Register</a>
+  <a sec:authorize="!isAuthenticated()" href="/login">Login</a>
+  <a sec:authorize="isAuthenticated()" href="/products">Products</a>
+  <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin">Admin</a>
+  <a sec:authorize="isAuthenticated()" href="/logout">Logout</a>
+  <a sec:authorize="hasRole('ROLE_USER')"href="/cart">See cart</a>
+  <a sec:authorize="hasRole('ROLE_USER')"href="/cart">Profile</a>
 </nav>
 </div>
+</html>
